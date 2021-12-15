@@ -1,13 +1,14 @@
-var canvas = document.querySelector('canvas');
-var context = canvas.getContext('2d');
+var dpr = window.devicePixelRatio;
+var width = dpr * window.innerWidth / 4;
+var height = dpr * window.innerHeight / 4;
+var dotSize = 1;
+var dotSpeed = 1;
 
 function sketch_idnameofdiv(p) {
   p.setup = function () {
     p.createCanvas(width + 10, height);
     p.clear();
   }
-  lines.push(line);
-}
 
   p.draw = function () {
     p.clear();
@@ -69,7 +70,5 @@ function sketch_idnameofdiv(p) {
       }
     }
   }
-  for(var i = 0; i < dotLine.length - 2; i++) {
-    drawTriangle(dotLine[i], dotLine[i+1], dotLine[i+2]);
-  }
 }
+new p5(sketch_idnameofdiv, 'canvas')
