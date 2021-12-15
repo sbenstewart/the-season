@@ -1,6 +1,8 @@
 var dpr = window.devicePixelRatio;
 var width = dpr * window.innerWidth / 4;
 var height = dpr * window.innerHeight / 4;
+var dotSize = 1;
+var dotSpeed = 1;
 
 function sketch_idnameofdiv(p) {
   p.setup = function () {
@@ -24,11 +26,20 @@ function sketch_idnameofdiv(p) {
       for (var x = dpr * gap / 4; x <= size; x += gap * dpr) {
         dot = { x: x + (odd ? dpr * gap / 2 : 0), y: y };
         line.push(dot);
-        p.fill(0);
-        p.noStroke();
-        p.circle(dot.x, dot.y, 3);
       }
       lines.push(line);
+    }
+
+    if(dotSize < 1 || dotSize > 40) {
+      dotSpeed = -dotSpeed;
+    }
+    dotSize = (dotSize + dotSpeed);
+
+
+    function drawDot(p, pointA) {
+      p.fill(0);
+      p.noStroke();
+      p.circle(pointA.x, pointA.y, dotSize/10);
     }
 
 
@@ -45,10 +56,12 @@ function sketch_idnameofdiv(p) {
       odd = !odd;
       dotLine = [];
       for (var i = 0; i < lines[y].length; i++) {
-        if (i + (y / 2) < size / (dpr * gap * 2) - 1) continue;
-        if (i - (y / 2) >= size / (dpr * gap * 2) + 1) continue;
+        if (i + (y / 2) < size / (dpr * gap * 2) - 1 || i - (y / 2) >= size / (dpr * gap * 2) + 1) {
+          drawDot(p,lines[y][i])
+        } else {
         dotLine.push(odd ? lines[y][i] : lines[y + 1][i]);
         dotLine.push(odd ? lines[y + 1][i] : lines[y][i]);
+        }
       }
       for (var i = 0; i < dotLine.length - 2; i++) {
         drawTriangle(p, dotLine[i], dotLine[i + 1], dotLine[i + 2]);
