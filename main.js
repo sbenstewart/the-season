@@ -6,7 +6,7 @@ var dotSpeed = 1;
 
 function sketch_idnameofdiv(p) {
   p.setup = function () {
-    p.createCanvas(width, height);
+    p.createCanvas(width + 10, height);
     p.clear();
   }
 
@@ -30,16 +30,18 @@ function sketch_idnameofdiv(p) {
       lines.push(line);
     }
 
-    if(dotSize < 1 || dotSize > 40) {
+    if (dotSize < 1 || dotSize > 40) {
       dotSpeed = -dotSpeed;
     }
-    dotSize = (dotSize + dotSpeed);
+    if (!p.mouseIsPressed) {
+      dotSize = (dotSize + dotSpeed);
+    }
 
 
     function drawDot(p, pointA) {
       p.fill(0);
       p.noStroke();
-      p.circle(pointA.x, pointA.y, dotSize/10);
+      p.circle(pointA.x, pointA.y, dotSize / 10);
     }
 
 
@@ -57,10 +59,10 @@ function sketch_idnameofdiv(p) {
       dotLine = [];
       for (var i = 0; i < lines[y].length; i++) {
         if (i + (y / 2) < size / (dpr * gap * 2) - 1 || i - (y / 2) >= size / (dpr * gap * 2) + 1) {
-          drawDot(p,lines[y][i])
+          drawDot(p, lines[y][i])
         } else {
-        dotLine.push(odd ? lines[y][i] : lines[y + 1][i]);
-        dotLine.push(odd ? lines[y + 1][i] : lines[y][i]);
+          dotLine.push(odd ? lines[y][i] : lines[y + 1][i]);
+          dotLine.push(odd ? lines[y + 1][i] : lines[y][i]);
         }
       }
       for (var i = 0; i < dotLine.length - 2; i++) {
