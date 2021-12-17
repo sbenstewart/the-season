@@ -33,15 +33,23 @@ function sketch_idnameofdiv(p) {
     if (dotSize < 1 || dotSize > 40) {
       dotSpeed = -dotSpeed;
     }
-    if (!p.mouseIsPressed) {
+
+    var offsetX = 0;
+    var offsetY = 0;
+    if (p.mouseIsPressed && p.mouseX > 0 && p.mouseX < width && p.mouseY > 0 && p.mouseY < width) {
+      offsetX = p.map(p.mouseX, 0, width, - gap * dpr / 2, gap * dpr * 0.9);
+      offsetY = p.map(p.mouseY, 0, width, - gap * dpr / 2, gap * dpr * 0.9);
+      dotSize = (dotSize + dotSpeed / 3);
+    } else if (p.mouseIsPressed) {
+      dotSize = dotSize;
+    } else {
       dotSize = (dotSize + dotSpeed);
     }
-
 
     function drawDot(p, pointA) {
       p.fill(0);
       p.noStroke();
-      p.circle(pointA.x, pointA.y, dotSize / 10);
+      p.circle(pointA.x + offsetX, pointA.y + offsetY, dotSize / 10);
     }
 
 
