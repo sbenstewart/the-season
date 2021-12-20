@@ -6,7 +6,7 @@ var dotSpeed = 1;
 
 function sketch_idnameofdiv(p) {
   p.setup = function () {
-    p.createCanvas(width + 10, height);
+    p.createCanvas(width + 10, width);
     p.clear();
   }
 
